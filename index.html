@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <title>Test</title>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div>Corporate News Subscription</div>
+        <img src="img/logo.png" alt="Logo" />
+      </header>
+      <div class="banner">
+        <button>Request a Quote</button>
+      </div>
+      <h2>or contact a representative below</h2>
+      <div class="representative" id="representative">
+        
+      </div>
+      <div class="btn-view-more">
+        <button>View More></button>
+      </div>
+      <div class="representative-info">
+        <div class="table-heading">You are Viewing:</div>
+        <table border="1">
+          <tbody>
+            <tr>
+              <td colspan="2" id="Name"></td>
+            </tr>
+            <tr>
+              <td rowspan="2" class="representative-pic" id="largeImage">
+                
+              </td>
+              <td id="firstName"></td>
+            </tr>
+            <tr>
+              <td id="Location"></td>
+            </tr>
+            <tr>
+              <td>Email</td>
+              <td id="Email"></td>
+            </tr>
+            <tr>
+              <td id="divID">Phone</td>
+              <td id="Phone"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div id="authors"></div>
+    <script type="text/javascript">
+      function createNode(element) {
+        return document.createElement(element);
+      }
+
+      function append(parent, el) {
+        return parent.appendChild(el);
+      }
+
+      const ul = document.getElementById("representative");
+      const ul1 = document.getElementById("largeImage");
+      const url = "https://randomuser.me/api/";
+
+      fetch(url)
+        .then((resp) => resp.json())
+        .then(function (data) {
+          let authors = data.results;
+          return authors.map(function (author) {
+            let li = createNode("li");
+            let img = createNode("img");
+            let li1 = createNode("div");
+            let img1 = createNode("img");
+            img.src = author.picture.thumbnail;
+            append(li, img);
+            append(ul, li);
+            append(li1, img1);
+            append(ul1, li1);
+            img1.src = author.picture.large;
+            console.log(data);
+            var div = document.getElementById('Name');
+            var div1 = document.getElementById('firstName');
+            var div2 = document.getElementById('Location');
+            var div3 = document.getElementById('Email');
+            var div4 = document.getElementById('Phone');
+            div.innerHTML = `${author.name.title} ${author.name.first} ${author.name.last}`;
+            div1.innerHTML = `${author.name.first}`;
+            div2.innerHTML = `${author.location.city} ${author.location.postcode} ${author.location.state} ${author.location.country}`;
+            div3.innerHTML = `${author.email}`;
+            div4.innerHTML = `${author.phone}`;
+          });
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    </script>
+  </body>
+</html>
